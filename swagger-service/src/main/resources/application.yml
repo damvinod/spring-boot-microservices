@@ -1,0 +1,38 @@
+server:  
+  port: ${PORT:8765}
+
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
+
+zuul:
+  prefix: /api
+  routes:
+    currency-exchange: 
+      path: /currency-exchange/**
+      serviceId: currency-exchange-service
+    currency-convertor: 
+      path: /currency-convertor/**
+      serviceId: currency-conversion-service
+
+ribbon:
+  eureka:
+    enabled: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registerWithEureka: false
+    
+spring:
+  application:
+    name: swagger-service
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
